@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trade</title>
+    <link rel="shortcut icon" href="static/images/logo/favicon.png" type="image/png"/>
+    <link href="static/fonts/noto-sans-v42-latin-regular.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="stylesheet" href="static/remixicon/remixicon.css">
+    <link rel="stylesheet" href="static/css/bootstrap.min.css">
+    <link rel="stylesheet" href="static/choices/choices.min.css">
+    <script>
+        (function () {
+            const savedTheme = localStorage.getItem("admin-theme");
+            const prefersDark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
+            const theme = savedTheme || (prefersDark ? "dark" : "light");
+            document.documentElement.setAttribute("data-theme", theme);
+        })();
+    </script>
+    <link rel="stylesheet" href="static/css/admin.css">
+    <style>
+        body { font-family: 'Noto sans', sans-serif; }
+        @font-face {
+            font-family: "remixicon";
+            src: url('static/remixicon/remixicon.woff2') format("woff2");
+            font-display: swap;
+        }
+        @font-face {
+            font-display: swap; 
+            font-family: 'Noto Sans';
+            font-style: normal;
+            font-weight: 300;
+            src: url('static/fonts/noto-sans-v42-latin-300.woff2') format('woff2'); 
+        }
+        @font-face {
+            font-display: swap; 
+            font-family: 'Noto Sans';
+            font-style: normal;
+            font-weight: 400;
+            src: url('static/fonts/noto-sans-v42-latin-regular.woff2') format('woff2'); 
+        }
+        @font-face {
+            font-display: swap; 
+            font-family: 'Noto Sans';
+            font-style: italic;
+            font-weight: 400;
+            src: url('static/fonts/noto-sans-v42-latin-italic.woff2') format('woff2'); 
+        }
+        @font-face {
+            font-display: swap; 
+            font-family: 'Noto Sans';
+            font-style: normal;
+            font-weight: 500;
+            src: url('static/fonts/noto-sans-v42-latin-500.woff2') format('woff2'); 
+        }
+        @font-face {
+            font-display: swap; 
+            font-family: 'Noto Sans';
+            font-style: normal;
+            font-weight: 600;
+            src: url('static/fonts/noto-sans-v42-latin-600.woff2') format('woff2'); 
+        }
+        @font-face {
+            font-display: swap; 
+            font-family: 'Noto Sans';
+            font-style: normal;
+            font-weight: 700;
+            src: url('static/fonts/noto-sans-v42-latin-700.woff2') format('woff2'); 
+        }
+        @font-face {
+            font-display: swap; 
+            font-family: 'Noto Sans';
+            font-style: normal;
+            font-weight: 800;
+            src: url('static/fonts/noto-sans-v42-latin-800.woff2') format('woff2'); 
+        }
+        
+        .certificate::before {
+            content: "";
+            position: absolute;
+            top: 7mm;
+            right: 7mm;
+            bottom: 7mm;
+            left: 7mm;
+            border: 2px solid #3454d1;
+            pointer-events: none;
+            z-index: 5;
+        }
+
+        .certificate::after {
+            content: "";
+            position: absolute;
+            top: 9mm;
+            right: 9mm;
+            bottom: 9mm;
+            left: 9mm;
+            border: 1px solid #3454d1 ;
+            pointer-events: none;
+            z-index: 5;
+        }
+
+        .my-table th,
+        .my-table td {
+            white-space: normal !important;
+            word-break: break-all !important;
+            overflow-wrap: anywhere !important;
+            overflow: hidden !important;
+        }
+    </style>
+</head>
+<body class="sidebar-collapsed">
+    <div class="app-wrapper">
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar" aria-label="Main navigation">
+        <div class="sidebar-header">
+            <a href="dashboard.html" class="logo">
+                <div class="brand-icon">
+                    <img src="static/images/logo/logo.png" alt="navbar brand" class="navbar-brand" height="40">
+                </div>
+                <span class="brand-text">App Launcher</span>
+            </a>
+                <button type="button" class="icon-btn mobile-sidebar-close" id="mobileSidebarClose" aria-label="Close navigation">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M21 17.9996V19.9996H3V17.9996H21ZM7 3.5V13.5L2 8.49955L7 3.5ZM21 10.9996V12.9996H12V10.9996H21ZM21 3.99955V5.99955H12V3.99955H21Z"></path></svg>
+                </button>
+        </div>
+
+        <nav>
+            <div class="sidebar-section">
+                <div class="sidebar-section-title">
+                    Navigation
+                </div>
+                <a href="dashboard.html" class="sidebar-link" data-page="Dashboard">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M14 21C13.4477 21 13 20.5523 13 20V12C13 11.4477 13.4477 11 14 11H20C20.5523 11 21 11.4477 21 12V20C21 20.5523 20.5523 21 20 21H14ZM4 13C3.44772 13 3 12.5523 3 12V4C3 3.44772 3.44772 3 4 3H10C10.5523 3 11 3.44772 11 4V12C11 12.5523 10.5523 13 10 13H4ZM9 11V5H5V11H9ZM4 21C3.44772 21 3 20.5523 3 20V16C3 15.4477 3.44772 15 4 15H10C10.5523 15 11 15.4477 11 16V20C11 20.5523 10.5523 21 10 21H4ZM5 19H9V17H5V19ZM15 19H19V13H15V19ZM13 4C13 3.44772 13.4477 3 14 3H20C20.5523 3 21 3.44772 21 4V8C21 8.55228 20.5523 9 20 9H14C13.4477 9 13 8.55228 13 8V4ZM15 5V7H19V5H15Z"></path></svg>
+                    <span class="sidebar-label">Dashboard</span>
+                </a>
+                <a href="ulbs.html" class="sidebar-link active">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M21 21H3C2.44772 21 2 20.5523 2 20V12.4868C2 12.1978 2.12501 11.9229 2.34282 11.733L6 8.54435V4C6 3.44772 6.44772 3 7 3H21C21.5523 3 22 3.44772 22 4V20C22 20.5523 21.5523 21 21 21ZM9 19H12V12.9416L8 9.45402L4 12.9416V19H7V15H9V19ZM14 19H20V5H8V7.12729C8.23444 7.12729 8.46888 7.20938 8.65718 7.37355L13.6572 11.733C13.875 11.9229 14 12.1978 14 12.4868V19ZM16 11H18V13H16V11ZM16 15H18V17H16V15ZM16 7H18V9H16V7ZM12 7H14V9H12V7Z"></path></svg>
+                    <span class="sidebar-label">ULBs</span>
+                </a>
+                <button
+                    type="button" class="sidebar-link" data-bs-toggle="collapse" data-bs-target="#reports" aria-expanded="false">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M11 7H13V17H11V7ZM15 11H17V17H15V11ZM7 13H9V17H7V13ZM15 4H5V20H19V8H15V4ZM3 2.9918C3 2.44405 3.44749 2 3.9985 2H16L20.9997 7L21 20.9925C21 21.5489 20.5551 22 20.0066 22H3.9934C3.44476 22 3 21.5447 3 21.0082V2.9918Z"></path></svg>
+                    <span class="sidebar-label">Reports</span>
+                    <svg class="sidebar-toggle-arrow" viewBox="0 0 24 24" fill="currentColor"><path d="M11.9999 13.1714L16.9497 8.22168L18.3639 9.63589L11.9999 15.9999L5.63599 9.63589L7.0502 8.22168L11.9999 13.1714Z"></path></svg>
+                </button>
+                <div class="collapse" id="reports">
+                    <div class="submenu">
+                        <a href="table-basic.html" class="sidebar-link">
+                            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 13H4V11H12V4L20 12L12 20V13Z"></path></svg>
+                            <span class="sidebar-label">Trade Licence Report</span>
+                        </a>
+                        <a href="table-advance.html" class="sidebar-link">
+                            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 13H4V11H12V4L20 12L12 20V13Z"></path></svg>
+                            <span class="sidebar-label">Transaction Report</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </aside>
+        <!-- Mobile overlay -->
+    <div class="mobile-overlay" id="mobileOverlay" aria-hidden="true"></div>
+
+    <!-- MAIN WRAPPER -->
+    <div class="main-wrapper">
+        <!-- TOPBAR -->
+        <header class="topbar">
+            <div class="topbar-inner">
+                <button type="button" class="icon-btn" id="sidebarToggle" aria-label="Toggle navigation sidebar" aria-expanded="true" data-bs-toggle-tooltip="tooltip" title="Navigation">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18 18V20H6V18H18ZM21 11V13H3V11H21ZM18 4V6H6V4H18Z"></path></svg>
+                </button>
+
+               <div class="header-actions">
+                    <!-- Theme Mode -->
+                    <button type="button" class="icon-btn" id="themeToggle" aria-label="Toggle light and dark mode" data-bs-toggle-tooltip="tooltip" data-bs-placement="bottom" title="Theme">
+                    <i class="ri-moon-clear-line" id="themeIcon"></i>
+                    </button>
+                    <!-- User -->
+                    <div class="dropdown" data-bs-toggle-tooltip="tooltip" data-bs-placement="right" title="User">
+
+                        <button type="button" class="user-button dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                            <span class="avatar">AN</span>
+
+                            <span class="userBlock">
+                                <span class="user-name d-block">
+                                    Admin Name
+                                </span>
+
+                                <span class="user-role d-block">
+                                    Administrator
+                                </span>
+                            </span>
+                        </button>
+
+                        <ul class="dropdown-menu dropdown-menu-end">
+
+                            <li class="ps-1 uName">
+                                <span class="dropdown-item">
+                                    <span class="user-name d-block">
+                                        Admin Name
+                                    </span>
+    
+                                    <span class="user-role d-block">
+                                        Administrator
+                                    </span>
+                                </span>
+                            </li>
+                            <li class="uNameDivider">
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="#profile">
+                                    <svg class="me-1 mb-1" viewBox="0 0 24 24" fill="currentColor"><path d="M4 22C4 17.5817 7.58172 14 12 14C16.4183 14 20 17.5817 20 22H18C18 18.6863 15.3137 16 12 16C8.68629 16 6 18.6863 6 22H4ZM12 13C8.685 13 6 10.315 6 7C6 3.685 8.685 1 12 1C15.315 1 18 3.685 18 7C18 10.315 15.315 13 12 13ZM12 11C14.21 11 16 9.21 16 7C16 4.79 14.21 3 12 3C9.79 3 8 4.79 8 7C8 9.21 9.79 11 12 11Z"></path></svg>
+                                    Profile
+                                </a>
+                            </li>
+
+                            <li>
+                                <a class="dropdown-item" href="#change-password">
+                                    <svg class="me-1 mb-1" viewBox="0 0 24 24" fill="currentColor"><path d="M18 8H20C20.5523 8 21 8.44772 21 9V21C21 21.5523 20.5523 22 20 22H4C3.44772 22 3 21.5523 3 21V9C3 8.44772 3.44772 8 4 8H6V7C6 3.68629 8.68629 1 12 1C15.3137 1 18 3.68629 18 7V8ZM5 10V20H19V10H5ZM11 14H13V16H11V14ZM7 14H9V16H7V14ZM15 14H17V16H15V14ZM16 8V7C16 4.79086 14.2091 3 12 3C9.79086 3 8 4.79086 8 7V8H16Z"></path></svg>
+                                    Change Password
+                                </a>
+                            </li>
+
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+
+                            <li>
+                                <a class="dropdown-item text-danger" href="#logout">
+                                    <svg class="me-1 mb-1" viewBox="0 0 24 24" fill="currentColor"><path d="M5 22C4.44772 22 4 21.5523 4 21V3C4 2.44772 4.44772 2 5 2H19C19.5523 2 20 2.44772 20 3V6H18V4H6V20H18V18H20V21C20 21.5523 19.5523 22 19 22H5ZM18 16V13H11V11H18V8L23 12L18 16Z"></path></svg>
+                                    Logout
+                                </a>
+                            </li>
+
+                        </ul>
+                    </div>
+                    <!-- Theme Mode -->
+                    <button type="button" class="icon-btn" id="logout" aria-label="Logout" data-bs-toggle-tooltip="tooltip" data-bs-placement="bottom" title="Logout">
+                        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M5 22C4.44772 22 4 21.5523 4 21V3C4 2.44772 4.44772 2 5 2H19C19.5523 2 20 2.44772 20 3V6H18V4H6V20H18V18H20V21C20 21.5523 19.5523 22 19 22H5ZM18 16V13H11V11H18V8L23 12L18 16Z"></path></svg>
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- CONTENT -->
+        <main class="content">
+            <!-- Breadcrumb -->
+            <section class="page-inner d-flex align-items-left align-items-md-center flex-column flex-md-row pt-2 pb-3">
+                 <div class="page-heading">
+                     <h1 class="page-title">Trade Licence Certificate</h1>
+                 </div>
+            </section>
+ 
+            <section class="mb-4">
+             <div class="card">
+                 <div class="card-body p-4">
+
+                    <div class="certificate-wrapper" id="printableArea" style="padding: 30px 15px;">
+
+                        <main class="certificate" style="position: relative; width: 210mm; min-width: 297mm; max-width: 100%; margin: 0 auto; padding: 17mm 17mm; background: #ffffff; overflow: hidden;">
+                            <div class="watermark-logo" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 250px; height: 250px; z-index: 1; pointer-events: none; display: flex; align-items: center; justify-content: center;">
+                                <img src="static/images/logo/logo.png" alt="watermark logo" aria-hidden="true" style="width: 100%; height: 100%; object-fit: contain; display: block; opacity: 0.055;">
+                            </div>
+
+                            <!-- CONTENT -->
+                            <div class="certificate-content">
+                                <!-- HEADER -->
+                                <div style="text-align: center; padding-bottom: 13px; margin-bottom: 15px; border-bottom: 2px solid #000;">
+                                    <div class="emblem" style="width: 75px; height: 75px; margin: 0 auto 8px; display: flex; align-items: center; justify-content: center; text-align: center;color: #143bd3;">
+                                        <img src="static/images/logo/logo.png" alt="top main logo" aria-hidden="true" style="width: 100%; height: 100%; object-fit: contain; display: block;">
+                                    </div>
+                                    <div class="gov-name" style="color: #000; font-size: 25px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;">
+                                       Regional Municipal Corporation
+                                    </div>
+                                    <div class="department" style="margin-top: 1px; color: #344b60; font-size: 13px; font-weight: 600;">
+                                        Government Department
+                                    </div>
+                                    <div class="office" style="color: #535353; font-size: 12px;">
+                                        Licence u/s 554 Municipal Act 2003
+                                    </div>
+                                    <div class="office" style="color: #535353; font-size: 11px;">
+                                        (The licence is not transferable in respect to name or place)
+                                    </div>
+                                    <div class="office" style="color: #535353; font-size: 11px;">
+                                        (This licence must be kept in a prominent visible part of the business place)
+                                    </div>
+                                </div>
+                    
+                                <!-- TITLE -->
+                                <section class="certificate-title" style="text-align: center; margin: 18px 0 18px;">
+                                    <h1 style="margin: 0; color: #000; font-size: 21px; font-weight: 700; letter-spacing: 1px;">
+                                        TRADE LICENCE CERTIFICATE
+                                    </h1>
+                                    <h2 style="margin: 5px 0 0; color: #555; font-size: 15px; font-weight: 600;">
+                                        व्यापार अनुज्ञप्ति प्रमाण पत्र
+                                    </h2>
+                                    <div class="title-line" style="width: 115px; height: 3px; margin: 10px auto 0; background: #000;"></div>
+                                </section>
+                    
+                                <!-- MAIN INFORMATION -->
+                                <section class="meta-box" style="padding: 12px 15px; margin-bottom: 19px; background-color: rgb(244, 252, 255); border: 1px solid rgb(224, 246, 255);">
+                    
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="meta-item" style="display: flex; gap: 7px; margin-bottom: 5px; font-size: 13px;">
+                                                <span class="meta-label" style="font-weight: 700; margin-bottom: 0;">
+                                                    Certificate No.:
+                                                </span>
+                                                <span class="meta-value" style="margin-bottom: 0; color: #222; font-weight: 500;">
+                                                    CER-TL-2026-000001
+                                                </span>
+                                            </div>
+                                        </div>
+                    
+                                        <div class="col-md-6">
+                                            <div class="meta-item" style="display: flex; gap: 7px; margin-bottom: 5px; font-size: 13px;">
+                                                <span class="meta-label" style="font-weight: 700; margin-bottom: 0;">
+                                                    Issue Date:
+                                                </span>
+                                                <span class="meta-value" style="margin-bottom: 0; color: #222; font-weight: 500;">
+                                                    1 October 2026
+                                                </span>
+                                            </div>
+                                        </div>
+                    
+                                        <div class="col-md-6">
+                                            <div class="meta-item" style="display: flex; gap: 7px; margin-bottom: 5px; font-size: 13px;">
+                                                <span class="meta-label" style="font-weight: 700; margin-bottom: 0;">
+                                                    Trade Licence No.:
+                                                </span>
+                                                <span class="meta-value" style="margin-bottom: 0; color: #222; font-weight: 500;">
+                                                    JV-TL-2026-100001
+                                                </span>
+                                            </div>
+                                        </div>
+                    
+                                        <div class="col-md-6">
+                                            <div class="meta-item" style="display: flex; gap: 7px; margin-bottom: 5px; font-size: 13px;">
+                                                <span class="meta-label" style="font-weight: 700; margin-bottom: 0;">
+                                                    Valid Upto:
+                                                </span>
+                                                <span class="meta-value" style="margin-bottom: 0; color: #222; font-weight: 500;">
+                                                    31 March 2027
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </section>
+                
+                                <p class="intro" style="margin-bottom: 13px; font-size: 13px; line-height: 1.85; text-align: justify;">
+                    
+                                    This is to certify that the following trade/business has been registered/licensed for operation within the jurisdiction of the regional municipal Corporation, subject to the applicable laws, rules, regulations and conditions governing the issue of a Trade Licence.
+                    
+                                </p>
+                    
+                                <!-- BUSINESS NAME -->
+                                <div class="business-name" style="padding: 11px 15px; margin: 14px 0; text-align: center; background: rgba(247, 252, 255, 0.94); border-top: 1px solid #ccd5dc; border-bottom: #ccd5dc; font-weight: 700;">
+                    
+                                    M/S SHARMA GENERAL STORE
+                    
+                                </div>
+
+                                <!-- APPLICANT DETAIL -->
+                                <table class="table my-table" style="width: 100%; max-width: 100%; margin-top: 15px; border-collapse: collapse; font-size: 12px; border: 1px solid #d7dadd; pointer-events: none; table-layout: fixed;">
+                    
+                                    <tbody>
+                                        <tr>
+                                            <th width="30%">
+                                                Name of Applicant / Proprietor
+                                            </th>
+                                            <td width="70%">
+                                                Mr. Rajesh Kumar Sharma
+                                            </td>
+                                        </tr>
+        
+                                        <tr>
+                                            <th>
+                                                Trade / Business Name
+                                            </th>
+                                            <td>
+                                                Sharma General Store
+                                            </td>
+                                        </tr>
+                    
+                                        <tr>
+                                            <th>
+                                                Nature of Trade
+                                            </th>
+                                            <td>
+                                                Retail General Merchandise
+                                            </td>
+                                        </tr>
+                    
+                                        <tr>
+                                            <th>
+                                                Business Address
+                                            </th>
+                                            <td>
+                                                Shop No. 25, City Market, Jaipur, Rajasthan - 302001
+                                            </td>
+                                        </tr>
+                    
+                                        <tr>
+                                            <th>
+                                                Municipal Authority
+                                            </th>
+                                            <td>
+                                                Jaipur Municipal Corporation
+                                            </td>
+                                        </tr>
+                    
+                                        <tr>
+                                            <th>
+                                                Licence Period
+                                            </th>
+                                            <td>
+                                                01 October 2026 to 30 September 2027
+                                            </td>
+                                        </tr>
+                    
+                                        <tr>
+                                            <th>
+                                                Licence Category
+                                            </th>
+                                            <td>
+                                                Trade / Commercial Establishment
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                    
+                                <!-- SIGNATURE / VERIFICATION -->
+                                <section class="signature-area" style="margin-top: 27px;">
+                    
+                                    <div class="row align-items-end">                    
+                    
+                                        <!-- DATE -->
+                    
+                                        <div class="col-4">
+                    
+                                            <div style="min-height: 105px; padding-top: 45px; text-align: left;">                    
+                                                <div style="color: #555; font-size: 10.5px;">
+                                                    Date of Issue: <span class="signature-text" style="font-size: 11.5px; font-weight: 700; color: #222;">01 October 2026</span>
+                                                </div>
+                                                <div style="color: #555; font-size: 10.5px;">
+                                                    Receipt No.: <span class="signature-text" style="font-size: 11.5px; font-weight: 700; color: #222;">20260000000187</span>
+                                                </div>                    
+                                            </div>
+                    
+                                        </div>
+
+                                        <!-- AUTHORITY -->
+                    
+                                        <div class="col-4">
+                    
+                                            <div class="signature-box" style="min-height: 105px; padding-top: 45px; text-align: center;">
+                    
+                                                <div class="signature-line" style="width: 165px; margin: 0 auto 5px; border-top: 1px solid #444;"></div>
+                    
+                                                <div class="signature-name" style="font-size: 14px;">
+                                                    Authorized Officer
+                                                </div>
+                    
+                                                <div class="signature-designation" style="color: #555; font-size: 10.5px;">
+                                                    Municipal Commissoner
+                                                </div>
+                    
+                                                <div style="color: #555; font-size: 10.5px;">
+                                                    Regional Municipal Corporation
+                                                </div>
+                    
+                                            </div>
+                    
+                                        </div>
+                    
+                                        <!-- QR -->
+                    
+                                        <div class="col-4">
+                                            <div class="qr-box" style="width: 88px; height: 88px; margin:auto; border: 1px solid #222; display: flex; align-items: center; justify-content: center;">
+                                                <img src="static/images/qr/sampleqr.png" alt="qr" width="80px">
+                                            </div>
+                    
+                                            <div class="verify-text" style="text-align: center; margin-top: 5px; font-size: 9px; color: #555;">
+                                                Certificate Verification
+                                            </div>
+                                        </div>
+                    
+                                    </div>
+                    
+                                </section>
+
+                                <!-- TERMS -->
+                                <h3 style="margin-top: 22px; margin-bottom: 9px; padding-bottom: 5px; color: #000; border-bottom: 1px solid #c7d0d8; font-size: 14px; font-weight: 700;">
+                                    Note:
+                                </h3>
+                                <ol class="conditions" style="margin: 0; padding-left: 21px; font-size: 11.2px; line-height: 1.7;">
+                                    <li>
+                                        This licence is applicable only to the
+                                        trade/business and location specified in
+                                        this certificate.
+                                    </li>               
+                                    <li>
+                                        The licence holder shall comply with all
+                                        applicable municipal laws, rules, regulations
+                                        and conditions.
+                                    </li>
+                                    <li>
+                                        This licence does not by itself establish
+                                        ownership rights over the premises.
+                                    </li>
+                                </ol>
+            
+                                <!-- FOOTER -->
+                                <footer class="bottom-footer" style="display: flex; justify-content: space-between; gap: 15px; margin-top: 10px; padding-top: 5px; border-bottom: 1px solid #cbd3da; font-size: 9px; color: #59636c;">
+                                    <div>
+                                        Generated Date: <span>01/10/2026</span>
+                                    </div>
+                                    <div>
+                                        This is computer generated trade licence. 
+                                    </div>
+                                </footer>
+                    
+                            </div>
+                    
+                        </main>
+                    
+                    </div>
+                    <div class="d-print-none">
+                        <p class="text-center pt-2">
+                            <button type="button" class="btn btn-sm btn-primary app-open-btn my-1" data-bs-toggle="tooltip" data-bs-placement="top" title="Print" onclick="printTable('printableArea')">
+                                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17 2C17.5523 2 18 2.44772 18 3V7H21C21.5523 7 22 7.44772 22 8V18C22 18.5523 21.5523 19 21 19H18V21C18 21.5523 17.5523 22 17 22H7C6.44772 22 6 21.5523 6 21V19H3C2.44772 19 2 18.5523 2 18V8C2 7.44772 2.44772 7 3 7H6V3C6 2.44772 6.44772 2 7 2H17ZM16 17H8V20H16V17ZM20 9H4V17H6V16C6 15.4477 6.44772 15 7 15H17C17.5523 15 18 15.4477 18 16V17H20V9ZM8 10V12H5V10H8ZM16 4H8V7H16V4Z"></path></svg>
+                                Print
+                            </button>
+                        </p>
+                     </div>
+                 </div>
+             </div>
+ 
+         </section>
+        </main>
+
+   </div>
+
+    </div>
+
+    <!-- TOAST -->
+    <div id="toastContainer" class="toast-container position-fixed top-0 end-0 p-0" style="margin-top: 20px; margin-right: 10px; z-index: 1090;">
+    </div>
+
+    <script src="static/js/jquery/jquery.min.js"></script>
+    <script src="static/js/bootstrap.bundle.min.js"></script>
+    <script src="static/js/jquery/jquery.scrollbar.min.js"></script>
+    <script src="static/choices/choices.min.js"></script>
+    <script src="static/js/datatables/datatables.min.js"></script>
+    <script src="static/js/sweetalert/sweetalert.min.js"></script>
+    <script src="static/js/admin.js"></script>
+
+</body>
+</html>
