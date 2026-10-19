@@ -1,0 +1,360 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Death Certificate{% endblock %}
+
+{% block content %}
+<style>
+    .certificate::before {
+            content: "";
+            position: absolute;
+            top: 7mm;
+            right: 7mm;
+            bottom: 7mm;
+            left: 7mm;
+            border: 2px solid #757575;
+            pointer-events: none;
+            z-index: 5;
+        }
+
+        .certificate::after {
+            content: "";
+            position: absolute;
+            top: 9mm;
+            right: 9mm;
+            bottom: 9mm;
+            left: 9mm;
+            border: 1px solid #757575;
+            pointer-events: none;
+            z-index: 5;
+        }
+
+        .my-table th,
+        .my-table td {
+            white-space: normal !important;
+            word-break: break-all !important;
+            overflow-wrap: anywhere !important;
+            overflow: hidden !important;
+        }
+</style>
+<main class="content">
+    <!-- Breadcrumb -->
+    <section class="page-inner d-flex align-items-left align-items-md-center flex-column flex-md-row pt-2 pb-3">
+         <div class="page-heading">
+             <h1 class="page-title">Death Certificate</h1>
+         </div>
+    </section>
+
+    <section class="mb-4">
+     <div class="card">
+         <div class="card-body p-4">
+
+            <div class="certificate-wrapper" id="printableArea" style="padding: 30px 15px;">
+                <main class="certificate" style="position: relative; width: 210mm; min-width: 297mm; max-width: 100%; margin: 0 auto; padding: 17mm 17mm; background: #ffffff; overflow: hidden;">
+
+                    <!-- CONTENT -->
+                    <div class="certificate-content">
+                        <!-- HEADER -->
+                        <table style="width:100%; border-collapse:collapse;">
+                            <tr>
+                              <td style="width:25%; text-align:left; vertical-align:middle;">
+                                <img src="{% static 'images/logo/logo.png' %}"
+                                     alt="Left government logo"
+                                     style="width:75px; height:75px; object-fit:contain;">
+                              </td>
+                      
+                              <td style="width:50%; text-align:center; vertical-align:middle;">
+                                <img src="{% static 'images/logo/logo.png' %}"
+                                     alt="Center department logo"
+                                     style="width:85px; height:85px; object-fit:contain;">
+                              </td>
+                      
+                              <td style="width:25%; text-align:right; vertical-align:middle;">
+                                <img src="{% static 'images/logo/logo.png' %}"
+                                     alt="Right authority logo"
+                                     style="width:75px; height:75px; object-fit:contain;">
+                              </td>
+                            </tr>
+                          </table>
+                        <div style="text-align: center; padding-bottom: 13px; margin-bottom: 15px; border-bottom: 2px solid #000;">
+                            <div style="color: #0e0e0e; font-size: 10px; padding: 1px 0;">
+                                प्ररूप संख्या 6      
+                            </div>
+                            <div style="color: #0e0e0e; font-size: 10px;">
+                                FORM NO. 6     
+                            </div>
+                            <div class="gov-name" style="color: #000; font-size: 20px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;">
+                                राजस्थान सरकार
+                            </div>
+                            <div class="gov-name" style="color: #000; font-size: 20px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;">
+                                Government of Rajasthan
+                            </div>
+                            <div class="gov-name" style="color: #000; font-size: 18px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;">
+                                अर्थशास्त्र एवं सांख्यिकी निदेशालय
+                            </div>
+                            <div class="gov-name" style="color: #000; font-size: 18px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;">
+                                Directorate of Economics & Statistics
+                            </div>
+                            <div class="certificate-title" style="text-align: center; margin: auto; border: 2px solid #757575; width: 300px; border-radius: 5px;padding: 5px 0px">
+                                <h2 style="margin: 0; color: #000; font-size: 20px; font-weight: 700;">
+                                    मृत्यु प्रमाण पत्र
+                                </h2>
+                                <h1 style="margin: 0; color: #000; font-size: 20px; font-weight: 700; letter-spacing: 1px;">
+                                    DEATH CERTIFICATE
+                                </h1>
+                            </div>                                    
+                            <div style="color: #141414; font-size: 11px; margin: 3px 0px">
+                                (जन्म और मृत्यु रजिस्ट्रीकरण अधिनियम, 1969 की धारा 12/17 और
+                                राजस्थान जन्म और मृत्यु रजिस्ट्रीकरण नियम, 2000 के नियम 8/13 के अधीन जारी किया गया)
+                            </div>
+                            <div style="color: #141414; font-size: 11px;">
+                                (Issued under Section 12/17 of the Registration of Births and Deaths Act, 1969 and Rule 8/13 of the Rajasthan
+                                Registration of Births and Deaths Rules, 2000)
+                            </div>
+                        </div>
+        
+                        <p class="intro" style="margin-bottom: 13px; font-size: 13px; line-height: 1.85; text-align: justify;">
+            
+                            यह प्रमाणित किया जाता है कि निम्नलिखित सूचना मृत्यु के मूल अभिलेख से ली गई है जो कि (स्थानीय क्षेत्र/स्थानीय निकाय) ...................................................... तहसील/खण्ड .................................................... जिला ......................................... राज्य/संघ राज्य ......................................................., भारत का  रजिस्टर है।
+                        </p>
+                        <p class="intro" style="margin-bottom: 13px; font-size: 13px; line-height: 1.85; text-align: justify;">
+                            This is to certify that the following information has been taken from the original record of death which is the register for (local area/local body) .................of Tehsil/Block.......................... of District ............................... of State/Union Territory .....................
+                        </p>
+
+                        <!-- MAIN INFORMATION -->
+                        <section class="meta-box" style="padding: 10px 12px; margin-bottom: 15px; border: 1px solid #d7dadd;">
+            
+                            <div class="row">
+                                <div class="col-md-12 col-12">
+                                    <div class="meta-item" style="display: flex; gap: 7px; margin-bottom: 5px; font-size: 13px;">
+                                        <span class="meta-label" style="font-weight: 700; margin-bottom: 0;">
+                                            पंजीकरण संख्या (Registration No.):
+                                        </span>
+                                        <span class="meta-value" style="margin-bottom: 0; color: #222; font-weight: 500;">
+                                            01210011-2026
+                                        </span>
+                                    </div>
+                                </div>                    
+                                <div class="col-md-12 col-12">
+                                    <div class="meta-item" style="display: flex; gap: 7px; margin-bottom: 5px; font-size: 13px;">
+                                        <span class="meta-label" style="font-weight: 700; margin-bottom: 0;">
+                                            पंजीकरण तिथि (Registration Date):
+                                        </span>
+                                        <span class="meta-value" style="margin-bottom: 0; color: #222; font-weight: 500;">
+                                            01/10/2026
+                                        </span>
+                                    </div>
+                                </div>                    
+                            </div>
+                        </section>
+
+                        <!-- APPLICANT DETAIL -->
+                        <table class="table my-table" style="width: 100%; max-width: 100%; margin-top: 15px; border-collapse: collapse; font-size: 12px; border: 1px solid #d7dadd; pointer-events: none; table-layout: fixed;">
+            
+                            <tbody>
+                                <tr>
+                                    <th width="30%">
+                                        नाम /Name
+                                    </th>
+                                    <td width="40%">
+                                        Mr. Sohan Das
+                                    </td>
+                                    <th width="15%">
+                                        लिंग /Sex
+                                    </th>
+                                    <td width="15%">
+                                        Male
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th width="29%">
+                                        मृतक का आधार नंबर /Deceased Aadhar No : 
+                                    </th>
+                                    <td width="71%" colspan="3">
+                                        345678912345
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        मृत्यु स्थान /Place of Death :
+                                    </th>
+                                    <td colspan="3">
+                                        Jaipur, Rajasthan
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        मृत्यु की तिथि /Date of Death :
+                                    </th>
+                                    <td colspan="3">
+                                        16/09/2026
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        माता का नाम /Name of Mother : 
+                                    </th>
+                                    <td colspan="3">
+                                        Ganga Devi
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        माता का आधार नंबर /Mother Aadhar No :
+                                    </th>
+                                    <td colspan="3">
+                                        123456789012
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        पिता का नाम /Name of Father :
+                                    </th>
+                                    <td colspan="3">
+                                        Vijay Das
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        पिता का आधार नंबर /Father Aadhar No :
+                                    </th>
+                                    <td colspan="3">
+                                        223456789013
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        पति/पत्नी का नाम /Name of Husband/Wife :
+                                    </th>
+                                    <td colspan="3">
+                                        Sonali Das
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        पति/पत्नी का आधार नंबर / 
+                                        <br>
+                                        Husband/Wife Aadhar No :
+                                    </th>
+                                    <td colspan="3">
+                                        523456789015
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        मृतक का मृत्यु के समय का पता / 
+                                        <br>
+                                        Address of deceased at the time of Death:
+                                    </th>
+                                    <td colspan="3">
+                                        123, Tonk Road, Jaipur, Rajasthan, 302001
+                                    </td>
+                                </tr>
+            
+                                <tr>
+                                    <th>
+                                        मृतक का स्थायी पता / 
+                                        <br>
+                                        Permanent address of the Deceased:
+                                    </th colspan="3">
+                                    <td>
+                                        456, C-scheme, Jaipur, Rajasthan, 302001
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+            
+                        <!-- SIGNATURE / VERIFICATION -->
+                        <section class="signature-area" style="margin-top: 30px;">
+            
+                            <div class="row align-items-end">   
+                                
+                                <!-- QR -->
+            
+                                <div class="col-6">
+                                    <div class="qr-box" style="width: 88px; height: 88px; border: 1px solid #222; display: flex; align-items: center; justify-content: center;">
+                                        <img src="{% static 'images/qr/sampleqr.png' %}" alt="qr" width="80px">
+                                    </div>
+            
+                                    <div class="verify-text" style="text-align: start; margin-top: 5px; font-size: 9px; color: #555;">
+                                        Certificate Verification
+                                    </div>
+                                </div>
+            
+                                <!-- AUTHORITY -->
+            
+                                <div class="col-6">
+            
+                                    <div class="signature-box" style="min-height: 105px; padding-top: 45px; text-align: center;">
+            
+                                        <div class="signature-line" style="width: 165px; margin: 0 auto 5px; border-top: 1px solid #444;"></div>
+            
+                                        <div class="signature-name" style="font-size: 12px;">
+                                            जारी करने वाले प्राधिाकारी के हस्ताक्षर / 
+                                            <br>
+                                            Signature of issuing authority
+                                        </div>
+            
+                                        <div class="signature-designation" style="color: #2b2b2b; font-size: 10.5px;">
+                                            जारी करने वाले प्राधिाकारी का पता /
+                                            <br>
+                                            Address of issuing authority
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                        <!-- ISSUE DATE -->
+                        <section class="signature-area" style="margin-top: 2px;">
+                            <div class="row align-items-end">                    
+                                <div class="col-4">
+                                    <div style="min-height: 10px; padding-top: 5px; text-align: left;">                    
+                                        <div style="color: #363636; font-size: 10.5px;">
+                                            जारी करने की तिथि /Date of Issue: 
+                                            <br>
+                                            <span class="signature-text" style="font-size: 11.5px; font-weight: 700; color: #222;">06 October 2026</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+
+                        <!-- TERMS -->
+                        <h3 style="margin-top: 22px; margin-bottom: 9px; padding-bottom: 5px; color: #000; border-bottom: 1px solid #c7d0d8; font-size: 14px; font-weight: 700;">
+                            Note:
+                        </h3>
+                        <ol class="conditions" style="margin: 0; padding-left: 21px; font-size: 11.2px; line-height: 1.7;">
+                            <li>
+                                Use of Digital Signature for issuing birth and death certificate is recognized by Economics and Statistics Department, Government of Rajasthan vide circular number F13/1/39/VS/DES/2013/22519 Dated 02.06.2015
+                            </li>               
+                        </ol>
+    
+                        <!-- FOOTER -->
+                        <footer class="bottom-footer" style="display: flex; justify-content: space-between; gap: 15px; margin-top: 10px; padding-top: 5px; border-bottom: 1px solid #cbd3da; font-size: 9px; color: #59636c;">
+                            <div>
+                                Generated Date: <span>22/10/2026</span>
+                            </div>
+                            <div>
+                                This is computer generated Birth Certificate. 
+                            </div>
+                        </footer>
+            
+                    </div>
+            
+                </main>
+            
+            </div>
+            <div class="d-print-none">
+                <p class="text-center pt-2">
+                    <button type="button" class="btn btn-sm btn-primary app-open-btn my-1" data-bs-toggle="tooltip" data-bs-placement="top" title="Print" onclick="printTable('printableArea')">
+                        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17 2C17.5523 2 18 2.44772 18 3V7H21C21.5523 7 22 7.44772 22 8V18C22 18.5523 21.5523 19 21 19H18V21C18 21.5523 17.5523 22 17 22H7C6.44772 22 6 21.5523 6 21V19H3C2.44772 19 2 18.5523 2 18V8C2 7.44772 2.44772 7 3 7H6V3C6 2.44772 6.44772 2 7 2H17ZM16 17H8V20H16V17ZM20 9H4V17H6V16C6 15.4477 6.44772 15 7 15H17C17.5523 15 18 15.4477 18 16V17H20V9ZM8 10V12H5V10H8ZM16 4H8V7H16V4Z"></path></svg>
+                        Print
+                    </button>
+                </p>
+             </div>
+            </div>
+        </div>
+
+    </section>
+</main>
+{% endblock %}
